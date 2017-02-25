@@ -77,6 +77,23 @@ return redmineClient.register(redmineIssue);
 
 관리자에게 알림으로 메일 보내는 것도 전부 레드마인 이슈로 등록하는게 더 나을 것 같다. 어차피 레드마인에 이슈가 등록되면 거기서 메일이 발송되니깐, 그게 효율적일 듯하다.
 
+## Attachment file
+
+이슈에 파일 첨부가 계속 안되서, API들을 번갈아 사용해보니깐 아래 처럼 사용할 때에만 이슈에 파일이 첨부된다. 뭔가 이 라이브러리는 더 이상 업데이트를 안하는건지 pull request가 있는데도 merge를 안해주는거 보니깐 그냥 이렇게 써야 할 듯하다.
+
+```java
+Attachment attachment = 
+	attachmentManager.uploadAttachment(
+		file.getName(),
+		MediaType.TEXT_HTML_VALUE,
+		new FileInputStream( file ),
+		file.length()
+	);
+attachment.setFileName( file.getName() );
+
+issue.addAttachment( attachment );
+```
+
 ## 고찰
 
 * 스프링부트가 간단하게 이것저것 테스트하기 편하다. 엄청나게 간단하다.
